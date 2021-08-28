@@ -1,20 +1,46 @@
 <script lang="ts">
-  import Button from '$lib/Button.svelte';
+  import { fly, fade } from 'svelte/transition';
+
+  let visible = false;
+
+  setTimeout(() => {
+    visible = true;
+  }, 200);
 </script>
 
-<header>
-  <h1>Welcome to SvelteKit</h1>
-  <p>
-    Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation
-  </p>
-  <Button />
-</header>
+<main>
+  {#if visible}
+    <div transition:fly={{ duration: 1000, y: -200 }}>
+      <h1 transition:fade>Solana Wallet</h1>
+      <img
+        transition:fade
+        src="/static/img/solana-logo.png"
+        alt="solana logo"
+      />
+    </div>
+  {/if}
+</main>
 
 <style lang="scss">
-  header {
-    text-align: center;
+  main {
+    background: url('/static/img/solana-background.png') no-repeat center;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     h1 {
-      color: red;
+      text-align: center;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+        sans-serif;
+      color: white;
+      font-size: 50px;
     }
+  }
+
+  img {
+    height: 300px;
+    width: 300px;
   }
 </style>

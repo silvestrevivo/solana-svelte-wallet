@@ -1,9 +1,14 @@
 import { Connection } from '@solana/web3.js';
 import os from 'os';
-import fs from 'mz/fs';
+import fs from 'mz/fs.js';
 import path from 'path';
 import yaml from 'yaml';
 import type { connection } from '$types/types';
+
+/**
+ * Connection to the network
+ */
+let connection: Connection;
 
 async function getConfig(): Promise<connection> {
   // Path to Solana CLI config file
@@ -33,10 +38,13 @@ async function getRpcUrl(): Promise<string> {
 
 export async function get(): Promise<{
   body: {
-    rpcUrl: unknown;
-    version: unknown;
+    rpcUrl: string;
+    version: string;
   };
 }> {
+  /**
+   * Establish a connection to the cluster
+   */
   try {
     const rpcUrl = await getRpcUrl();
     const connection = new Connection(rpcUrl, 'confirmed');
@@ -44,7 +52,7 @@ export async function get(): Promise<{
     return {
       body: {
         rpcUrl,
-        version,
+        version: version?.['solana-core'],
       },
     };
   } catch (error) {
