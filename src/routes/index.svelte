@@ -1,24 +1,20 @@
 <script lang="ts">
-  import Button from '$lib/Button.svelte';
-  import Input from '$lib/Input.svelte';
-  import Logo from '$lib/Logo.svelte';
+  import { globalStore } from '$stores/global';
+  import { screens } from '$utils/screens';
+  import type { SelectedScreenT } from '$types/types';
 
-  let value = '';
-
-  function submit() {
-    ////
-  }
+  let selectedScreen: SelectedScreenT;
+  $: selectedScreen = screens[$globalStore.currentScreen];
+  $: console.log('selectedScreen: ', selectedScreen);
 </script>
 
 <main>
   <h1>Solana Wallet</h1>
   <div class="wrapper">
-    <Logo />
-    <div class="wrapper-content">
-      <h2>Unblock the wallet</h2>
-      <Input type="password" bind:value />
-      <Button on:click={submit}>submit</Button>
-    </div>
+    <svelte:component
+      this={selectedScreen.component}
+      screenObj={selectedScreen}
+    />
   </div>
   <p>
     powered by <a href="https://kit.svelte.dev/" target="_blank">SvelteKit</a>
@@ -48,24 +44,8 @@
       height: 90%;
       max-height: 450px;
       background-color: #272727;
-      box-shadow: 0px 0px 26px -4px #17645ecc;
-
-      :global(svg) {
-        height: 100%;
-        max-height: 290px;
-        margin: 0 auto;
-        display: flex;
-      }
-
-      .wrapper-content {
-        padding: 15px;
-
-        h2 {
-          text-align: center;
-          color: #17645ecc;
-          margin-bottom: 5px;
-        }
-      }
+      box-shadow: 0px 0px 26px -4px var(--green);
+      position: relative;
     }
     p {
       margin: 10px 0;

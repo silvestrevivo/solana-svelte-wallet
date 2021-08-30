@@ -22,6 +22,8 @@ const config = {
         alias: {
           $types: path.resolve('src/types/'),
           $utils: path.resolve('src/utils/'),
+          $stores: path.resolve('src/stores/'),
+          $screens: path.resolve('src/screens/'),
         },
       },
     },

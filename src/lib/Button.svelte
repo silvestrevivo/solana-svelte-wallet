@@ -1,4 +1,8 @@
-<button on:click>
+<script lang="ts">
+  export let disabled = false;
+</script>
+
+<button on:click {disabled} class:enabled={!disabled}>
   <slot>Click</slot>
 </button>
 
@@ -12,9 +16,12 @@
     display: block;
     width: 100%;
     margin-top: 10px;
-    cursor: pointer;
-    &:hover {
-      color: var(--white);
+    cursor: not-allowed;
+    &.enabled {
+      cursor: pointer;
+      &:hover {
+        color: var(--white);
+      }
     }
   }
 </style>
