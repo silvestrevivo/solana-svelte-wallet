@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Connection from '$lib/Connection.svelte';
   import { globalStore } from '$stores/global';
   import { screens } from '$utils/screens';
   import type { SelectedScreenT } from '$types/types';
@@ -9,6 +10,7 @@
 </script>
 
 <main>
+  <Connection />
   <h1>Solana Wallet</h1>
   <div class="wrapper">
     <svelte:component

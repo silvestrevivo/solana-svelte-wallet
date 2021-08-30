@@ -12,9 +12,17 @@
 
 <script lang="ts">
   import '../app.scss';
+  import { globalStore } from '$stores/global';
 
   export let connection;
+
   console.log('Connection to cluster established:', connection);
+
+  $: updateConnection(connection);
+
+  function updateConnection(connection) {
+    $globalStore.connectionStatus = connection;
+  }
 </script>
 
 <slot />
