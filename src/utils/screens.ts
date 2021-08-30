@@ -1,10 +1,10 @@
-import Unblock from '$screens/Unblock.svelte';
+import Unlock from '$screens/Unlock.svelte';
 import Dashboard from '$screens/Dashboard.svelte';
 import Transactions from '$screens/Transactions.svelte';
 
 export const screens = {
-  unblock: {
-    component: Unblock,
+  unlock: {
+    component: Unlock,
     class: 'unblock-container',
     screenOrder: 1,
   },

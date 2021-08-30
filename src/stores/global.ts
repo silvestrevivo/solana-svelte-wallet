@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 
 export const globalStore = writable({
-  currentScreen: 'unblock',
+  currentScreen: 'unlock',
   prevScreen: 0,
   connectionStatus: null,
 });

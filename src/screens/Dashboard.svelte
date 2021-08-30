@@ -1,12 +1,13 @@
 <script lang="ts">
   import Screen from '$lib/Screen.svelte';
+  import TransactionHandle from '$lib/TransactionHandle.svelte';
   import { globalStore } from '$stores/global';
   import type { SelectedScreenT } from '$types/types';
 
   export let screenObj: SelectedScreenT;
 
   function back() {
-    $globalStore.currentScreen = 'unblock';
+    $globalStore.currentScreen = 'unlock';
     $globalStore.prevScreen = screenObj.screenOrder;
   }
 </script>
@@ -16,13 +17,14 @@
     <p class="price-fiat">$250,35</p>
     <p class="price-sol">SOL 2.35</p>
   </div>
-  <button on:click={back}>back</button>
+  <TransactionHandle />
 </Screen>
 
 <style lang="scss">
   :global(.dashboard-container) {
-    border: 1px solid blue;
     padding: 15px;
+    display: flex;
+    flex-direction: column;
   }
 
   .wrapper-price {

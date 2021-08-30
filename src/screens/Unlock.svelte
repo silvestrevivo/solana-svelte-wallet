@@ -22,7 +22,7 @@
 <Screen currScreenObj={screenObj}>
   <Logo />
   <div class="wrapper-content">
-    <h2>Unblock the wallet</h2>
+    <h2>Unlock the wallet</h2>
     <Input type="password" bind:value placeholder="type your passworkd" />
     <Button on:click={submit} {disabled}>submit</Button>
   </div>
