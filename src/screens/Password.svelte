@@ -12,7 +12,17 @@
   function step() {
     $globalStore.currentScreen = 'dashboard';
     $globalStore.prevScreen = screenObj.screenOrder;
+
+    let currentLocalStorage = JSON.parse(localStorage.getItem('wallet'));
+    let updateObjectFromLocalStorage = { ...currentLocalStorage, password };
+    localStorage.setItem(
+      'wallet',
+      JSON.stringify(updateObjectFromLocalStorage),
+    );
   }
+
+  $: inputFilled = password.length > 0 && confirmPassword.length > 0;
+  $: disabled = !(password === confirmPassword && inputFilled);
 </script>
 
 <Screen currScreenObj={screenObj}>
@@ -23,7 +33,7 @@
       bind:value={confirmPassword}
       placeholder="confirm passworkd"
     />
-    <Button on:click={step}>Next</Button>
+    <Button on:click={step} {disabled}>Next</Button>
   </div>
 </Screen>
 

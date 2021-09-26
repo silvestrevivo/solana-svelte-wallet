@@ -1,14 +1,15 @@
 <script lang="ts">
   export let type: string = 'text',
     placeholder: string = '........',
-    value: string;
+    value: string,
+    error = false;
 
   function typeAction(node: HTMLInputElement) {
     node.type = type;
   }
 </script>
 
-<input use:typeAction {placeholder} bind:value />
+<input use:typeAction {placeholder} bind:value class:error />
 
 <style lang="scss">
   input {
@@ -22,6 +23,9 @@
     color: var(--green);
     &:focus {
       outline: none;
+    }
+    &.error {
+      border-color: red;
     }
   }
 </style>

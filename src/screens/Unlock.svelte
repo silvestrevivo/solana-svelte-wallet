@@ -8,22 +8,39 @@
 
   export let screenObj: SelectedScreenT;
 
-  let value = '';
-
-  $: disabled = value.length === 0;
+  let value = '',
+    error = false;
 
   function submit() {
-    console.log('submit');
-    $globalStore.currentScreen = 'dashboard';
-    $globalStore.prevScreen = screenObj.screenOrder;
+    let { password } = JSON.parse(localStorage.getItem('wallet'));
+    if (password === value) {
+      $globalStore.currentScreen = 'dashboard';
+      $globalStore.prevScreen = screenObj.screenOrder;
+    } else {
+      error = true;
+    }
   }
+
+  function checkError(value: string) {
+    if (value === '') {
+      error = false;
+    }
+  }
+
+  $: checkError(value);
+  $: disabled = value.length === 0;
 </script>
 
 <Screen currScreenObj={screenObj}>
   <Logo />
   <div class="wrapper-content">
     <h2>Unlock the wallet</h2>
-    <Input type="password" bind:value placeholder="type your passworkd" />
+    <Input
+      type="password"
+      bind:value
+      placeholder="type your passworkd"
+      {error}
+    />
     <Button on:click={submit} {disabled}>submit</Button>
   </div>
 </Screen>

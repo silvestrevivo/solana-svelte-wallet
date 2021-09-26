@@ -1,12 +1,30 @@
 <script lang="ts">
-  import { globalStore } from '$stores/global';
+  import { Connection } from '@solana/web3.js';
+  // import { getRpcUrl } from '$utils/helpers';
+  import type { ConnectionT } from '$types/types';
 
-  $: active = !!$globalStore.connectionStatus.version;
+  let connectionData: ConnectionT;
+
+  async function getConnection() {
+    // const rpcUrl = await getRpcUrl();
+    const rpcUrl = 'https://api.devnet.solana.com';
+    const connection = new Connection(rpcUrl, 'confirmed');
+    const version = await connection.getVersion();
+    console.log('version: ', version);
+    connectionData = {
+      rpcUrl,
+      version: version?.['solana-core'],
+    };
+  }
+
+  getConnection();
+
+  $: active = connectionData && !!connectionData.version;
 </script>
 
 <div>
   <span class:active />
-  <p class:active>{active ? $globalStore.connectionStatus.version : '-.-.-'}</p>
+  <p class:active>{active ? connectionData.version : '-.-.-'}</p>
 </div>
 
 <style lang="scss">

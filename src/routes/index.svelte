@@ -25,7 +25,7 @@
 
 <style lang="scss">
   main {
-    background: url('/static/img/background.jpg') no-repeat center;
+    background-color: #272727;
     background-size: cover;
     height: 100vh;
     display: flex;

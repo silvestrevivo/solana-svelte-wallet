@@ -1,10 +1,10 @@
 import { writable } from 'svelte/store';
+import type { GlobalStoreT } from '$types/types';
 
-export const globalStore = writable({
-  //currentScreen: 'unlock',
-  currentScreen: 'createorrecover',
+export const globalStore = writable<GlobalStoreT>({
+  currentScreen: '',
   prevScreen: 0,
   // wallet content
   action: null,
-  connectionStatus: null,
+  keypair: undefined,
 });

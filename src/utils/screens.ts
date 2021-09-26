@@ -2,7 +2,7 @@ import Unlock from '$screens/Unlock.svelte';
 import Dashboard from '$screens/Dashboard.svelte';
 import Transactions from '$screens/Transactions.svelte';
 import CreateOrRecover from '$screens/CreateOrRecover.svelte';
-import PrivateKey from '$screens/PrivateKey.svelte';
+// import PrivateKey from '$screens/PrivateKey.svelte';
 import Password from '$screens/Password.svelte';
 
 export const screens = {
@@ -16,24 +16,24 @@ export const screens = {
     class: 'createorrecover-container',
     screenOrder: 1,
   },
-  privatekey: {
-    component: PrivateKey,
-    class: 'privatekey-container',
-    screenOrder: 2,
-  },
+  // privatekey: {
+  //   component: PrivateKey,
+  //   class: 'privatekey-container',
+  //   screenOrder: 2,
+  // },
   password: {
     component: Password,
     class: 'password-container',
-    screenOrder: 3,
+    screenOrder: 2,
   },
   dashboard: {
     component: Dashboard,
     class: 'dashboard-container',
-    screenOrder: 4,
+    screenOrder: 3,
   },
   transactions: {
     component: Transactions,
     class: 'transactions-container',
-    screenOrder: 5,
+    screenOrder: 4,
   },
 };

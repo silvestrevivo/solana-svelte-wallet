@@ -1,5 +1,5 @@
 import type { SvelteComponent } from 'svelte/internal';
-export interface connection {
+export interface ConfigT {
   json_rpc_url: string;
   websocket_url: string;
   keypair_path: string;
@@ -12,3 +12,17 @@ export interface SelectedScreenT {
   class: string;
   screenOrder: number;
 }
+
+export type ConnectionT = { rpcUrl: string; version: string };
+
+export type GlobalStoreT = {
+  currentScreen: string;
+  prevScreen: number;
+  action: unknown;
+  keypair:
+    | {
+        address: string;
+        secret: string;
+      }
+    | undefined;
+};
