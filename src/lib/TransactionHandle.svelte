@@ -2,18 +2,69 @@
   import Button from './Button.svelte';
   import { fade, fly } from 'svelte/transition';
   import Input from './Input.svelte';
+  import { globalStore } from '$stores/global';
+  import {
+    Connection,
+    PublicKey,
+    SystemProgram,
+    Transaction,
+    sendAndConfirmTransaction,
+  } from '@solana/web3.js';
+  import { createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher();
 
   let selectStatus = 'send',
     value: string,
-    transactionSended = false;
+    transactionSended = false,
+    address = undefined,
+    recipient = '',
+    error = false;
+
+  function copyToClipboard() {
+    navigator.clipboard.writeText(address.textContent);
+  }
 
   function select(params: string) {
     selectStatus = params;
   }
 
-  function sendTransaction() {
-    transactionSended = true;
-    value = '';
+  async function sendTransaction() {
+    const connection = new Connection(
+      'https://api.devnet.solana.com',
+      'confirmed',
+    );
+
+    const fromPubkey = new PublicKey($globalStore.keypair.address as string);
+    const toPubkey = new PublicKey(recipient as string);
+    const secretKey = Uint8Array.from(
+      JSON.parse($globalStore.keypair.secret as string),
+    );
+    const lamports = +value * 1000000000;
+    const instructions = SystemProgram.transfer({
+      fromPubkey,
+      toPubkey,
+      lamports,
+    });
+    const signers = [{ publicKey: fromPubkey, secretKey }];
+    const transaction = new Transaction().add(instructions);
+    const hash = await sendAndConfirmTransaction(
+      connection,
+      transaction,
+      signers,
+    );
+
+    if (hash) {
+      transactionSended = true;
+      value = '';
+      recipient = '';
+      dispatch('updateBalance');
+      setTimeout(() => {
+        transactionSended = false;
+      }, 2000);
+    } else {
+      error = true;
+    }
   }
 </script>
 
@@ -30,13 +81,16 @@
   <div class="action">
     {#if selectStatus === 'send'}
       <div class="send" in:fade={{ duration: 200 }}>
-        <Input type="number" bind:value placeholder="SOL" />
+        <Input type="number" bind:value placeholder="SOL" {error} />
+        <Input bind:value={recipient} placeholder="recipient address" {error} />
         {#if transactionSended}
-          <div class="confirm-transaction" in:fly={{ duration: 200, y: -50 }}>
+          <div
+            class="confirm-transaction"
+            in:fly={{ duration: 200, y: -50 }}
+            out:fly={{ duration: 200, x: -100 }}
+          >
             <span>transaction sended</span>
-            <a href="https://solana.com" target="_blank"
-              >dkjfdsfdjfhjsdhfsjfsjhfjshjsdhfjsh</a
-            >
+            <a href="https://solana.com" target="_blank">{recipient}</a>
           </div>
         {/if}
 
@@ -45,7 +99,9 @@
     {:else}
       <div class="receive" in:fade={{ duration: 200 }}>
         <p>wallet address</p>
-        <p>fjhdsjfhhdfjhds374857hdjfhdwh847</p>
+        <p bind:this={address} on:click={copyToClipboard} class="copy-address">
+          {$globalStore.keypair.address}
+        </p>
         <span>copy to receive transaction</span>
       </div>
     {/if}
@@ -60,7 +116,7 @@
     .selectors {
       display: flex;
       gap: 10px;
-      padding-top: 20px;
+      padding-top: 10px;
     }
     .action {
       margin: 20px 0;
@@ -81,6 +137,10 @@
           color: grey;
           margin-top: 30px;
           font-size: 14px;
+        }
+
+        .copy-address {
+          cursor: pointer;
         }
       }
       .send {
