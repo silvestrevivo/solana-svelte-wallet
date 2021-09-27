@@ -10,7 +10,6 @@
     const rpcUrl = 'https://api.devnet.solana.com';
     const connection = new Connection(rpcUrl, 'confirmed');
     const version = await connection.getVersion();
-    console.log('version: ', version);
     connectionData = {
       rpcUrl,
       version: version?.['solana-core'],

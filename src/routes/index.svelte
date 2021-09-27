@@ -6,7 +6,6 @@
 
   let selectedScreen: SelectedScreenT;
   $: selectedScreen = screens[$globalStore.currentScreen];
-  $: console.log('selectedScreen: ', selectedScreen);
 </script>
 
 <main>

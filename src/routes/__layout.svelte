@@ -8,14 +8,12 @@
     $globalStore.currentScreen = firstScreeen;
 
     if (wallet) {
-      console.log('yeah', JSON.parse(wallet));
       let { address, secret } = JSON.parse(wallet);
       $globalStore.keypair = { address, secret };
     }
   }
 
   initGlobalStore();
-  $: console.log('globalStore', $globalStore);
 </script>
 
 <slot />

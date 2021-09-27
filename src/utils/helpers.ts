@@ -16,7 +16,6 @@ export async function getConfig(): Promise<ConfigT> {
     'cli',
     'config.yml',
   );
-  console.log('CONFIG_FILE_PATH: ', CONFIG_FILE_PATH);
   const configYml = await fs.readFile(CONFIG_FILE_PATH, { encoding: 'utf8' });
   return yaml.parse(configYml);
 }

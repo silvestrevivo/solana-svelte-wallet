@@ -7,16 +7,15 @@
 
   export let screenObj: SelectedScreenT;
 
-  // function back() {
-  //   $globalStore.currentScreen = 'unlock';
-  //   $globalStore.prevScreen = screenObj.screenOrder;
-  // }
+  function goToTransactions() {
+    $globalStore.currentScreen = 'transactions';
+    $globalStore.prevScreen = screenObj.screenOrder;
+  }
 
   let lastBalance;
   let balanceInUSD;
 
   $: balanceInSol = +(lastBalance / 1000000000).toFixed(2);
-  console.log('balanceInSol: ', balanceInSol);
 
   async function getBalance() {
     const connection = new Connection(
@@ -25,7 +24,6 @@
     );
     const publicKey = new PublicKey($globalStore.keypair.address);
     const balance = await connection.getBalance(publicKey);
-    console.log('balance <= 1000000000: ', balance <= 1000000000);
 
     if (balance === undefined) {
       throw new Error('Account not funded');
@@ -33,7 +31,6 @@
       const hash = await connection.requestAirdrop(publicKey, LAMPORTS_PER_SOL);
       await connection.confirmTransaction(hash);
       const balance = await connection.getBalance(publicKey);
-      console.log('balance transaction: ', balance);
       lastBalance = balance;
     } else {
       lastBalance = balance;
@@ -48,7 +45,6 @@
       'https://api.coingecko.com/api/v3/coins/solana',
     );
     const result = await response.json();
-    console.log('result: ', result.market_data.current_price.usd);
     return result.market_data.current_price.usd;
   }
 
@@ -66,6 +62,9 @@
     {/if}
   </div>
   <TransactionHandle on:updateBalance={getBalance} />
+  <span class="transaction-list-button" on:click={goToTransactions}
+    >go to transactions</span
+  >
 </Screen>
 
 <style lang="scss">
@@ -93,6 +92,17 @@
       font-size: 28px;
       margin-top: 10px;
       color: var(--gray);
+    }
+  }
+
+  .transaction-list-button {
+    display: inline-block;
+    color: var(--white);
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    &:hover {
+      color: var(--green);
     }
   }
 </style>
