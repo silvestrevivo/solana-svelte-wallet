@@ -18,4 +18,6 @@ npm install
 npm run dev
 ```
 
-> You can preview the built app with `npm run preview`, regardless of whether you installed an adapter. This should _not_ be used to serve your app in production.
+## Things to take in consideration
+
+This is an exercise to learn how __Svelte__ works with __Solana__ in the frontend side. The wallet is running in the __DEVNET__, and that means that is not operating with real money. Some features like _QRcode_ recognition and wallet recovery are 'nice to have'. If you want to contribute, feel free to open a PR :).
