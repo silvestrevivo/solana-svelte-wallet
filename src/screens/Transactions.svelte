@@ -2,7 +2,7 @@
   import { globalStore } from '$stores/global';
   import type { SelectedScreenT } from '$types/types';
   import Screen from '$lib/Screen.svelte';
-  import { Connection, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
+  import { Connection, PublicKey } from '@solana/web3.js';
 
   export let screenObj: SelectedScreenT;
 
@@ -14,10 +14,7 @@
   }
 
   async function getTransactions() {
-    const connection = new Connection(
-      'https://api.devnet.solana.com',
-      'confirmed',
-    );
+    const connection = new Connection($globalStore.chainNet, 'confirmed');
     const publicKey = new PublicKey($globalStore.keypair.address);
     const balance = await connection.getBalance(publicKey);
     const transactions = await connection.getSignaturesForAddress(publicKey);
@@ -91,7 +88,6 @@
             text-decoration: underline;
           }
         }
-        /* color: var(--white); */
       }
     }
     .go-to-dashboard-button {

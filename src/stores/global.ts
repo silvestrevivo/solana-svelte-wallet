@@ -7,4 +7,5 @@ export const globalStore = writable<GlobalStoreT>({
   // wallet content
   action: null,
   keypair: undefined,
+  chainNet: 'https://api.devnet.solana.com',
 });

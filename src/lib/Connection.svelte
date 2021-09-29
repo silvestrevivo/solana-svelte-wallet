@@ -1,13 +1,12 @@
 <script lang="ts">
   import { Connection } from '@solana/web3.js';
-  // import { getRpcUrl } from '$utils/helpers';
   import type { ConnectionT } from '$types/types';
+  import { globalStore } from '$stores/global';
 
   let connectionData: ConnectionT;
 
   async function getConnection() {
-    // const rpcUrl = await getRpcUrl();
-    const rpcUrl = 'https://api.devnet.solana.com';
+    const rpcUrl = $globalStore.chainNet;
     const connection = new Connection(rpcUrl, 'confirmed');
     const version = await connection.getVersion();
     connectionData = {

@@ -1,10 +1,10 @@
 <script lang="ts">
   import Screen from '$lib/Screen.svelte';
   import Button from '$lib/Button.svelte';
-  import { globalStore } from '$stores/global';
-  import type { SelectedScreenT } from '$types/types';
   import Logo from '$lib/Logo.svelte';
+  import { globalStore } from '$stores/global';
   import { Keypair } from '@solana/web3.js';
+  import type { SelectedScreenT } from '$types/types';
 
   export let screenObj: SelectedScreenT;
 
@@ -31,6 +31,7 @@
     <Logo />
     <div class="wrapper-buttons">
       <Button on:click={() => step('create')}>Create Wallet</Button>
+      <!-- Todo: recover walle with PrivateKey -->
       <!-- <Button on:click={() => step('recover')}>Recover with PrivateKey</Button> -->
     </div>
   </div>

@@ -58,7 +58,7 @@
 
     h2 {
       text-align: center;
-      color: #17645ecc;
+      color: var(--green);
       margin-bottom: 5px;
     }
   }

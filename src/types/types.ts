@@ -19,6 +19,7 @@ export type GlobalStoreT = {
   currentScreen: string;
   prevScreen: number;
   action: unknown;
+  chainNet: string;
   keypair:
     | {
         address: string;

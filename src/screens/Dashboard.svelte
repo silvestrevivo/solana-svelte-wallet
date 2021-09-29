@@ -12,16 +12,12 @@
     $globalStore.prevScreen = screenObj.screenOrder;
   }
 
-  let lastBalance;
-  let balanceInUSD;
+  let lastBalance, balanceInUSD;
 
   $: balanceInSol = +(lastBalance / 1000000000).toFixed(2);
 
   async function getBalance() {
-    const connection = new Connection(
-      'https://api.devnet.solana.com',
-      'confirmed',
-    );
+    const connection = new Connection($globalStore.chainNet, 'confirmed');
     const publicKey = new PublicKey($globalStore.keypair.address);
     const balance = await connection.getBalance(publicKey);
 
@@ -40,7 +36,7 @@
     balanceInUSD = +(getBalanceInUSD * balanceInSol).toFixed(2);
   }
 
-  async function getBalanceInUSDFromAPI() {
+  async function getBalanceInUSDFromAPI(): Promise<number> {
     const response = await fetch(
       'https://api.coingecko.com/api/v3/coins/solana',
     );

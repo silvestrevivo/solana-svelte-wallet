@@ -30,10 +30,7 @@
   }
 
   async function sendTransaction() {
-    const connection = new Connection(
-      'https://api.devnet.solana.com',
-      'confirmed',
-    );
+    const connection = new Connection($globalStore.chainNet, 'confirmed');
 
     const fromPubkey = new PublicKey($globalStore.keypair.address as string);
     const toPubkey = new PublicKey(recipient as string);
