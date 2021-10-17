@@ -4,3 +4,4 @@ node_modules
 /package
 .eslintcache
 .env
+/build
